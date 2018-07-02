@@ -4,7 +4,13 @@
   "description": "",
   "main": "knexfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/app.js",
+    "dev": "nodemon ./src/app.js",
+    "knex": "knex",
+    "latest": "knex migrate:latest",
+    "rollback": "knex migrate:rollback",
+    "seed": "knex seed:run"
   },
   "keywords": [],
   "author": "",
@@ -18,5 +24,11 @@
     "knex": "^0.15.0",
     "morgan": "^1.9.0",
     "pg": "^7.4.3"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "dotenv": "^5.0.1",
+    "mocha": "^5.1.0",
+    "nodemon": "^1.17.3"
   }
 }

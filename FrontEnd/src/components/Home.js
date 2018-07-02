@@ -1,11 +1,8 @@
 import React, {Component} from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import Labels from './Labels'
+// import Labels from './Labels'
 import BlogPostsFrontPage from './BlogPostsFrontPage'
-import BlogPostArchive from './BlogPostArchive'
-import BlogPostsByUser from './BlogPostsByUser'
-import BlogPostsByLabel from './BlogPostsByLabel'
 import SideBar from './SideBar'
 import Footer from './Footer'
 
@@ -15,10 +12,6 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <div className="container">
-          <Labels />
-        </div>
-
         <main role="main" className="container">
           <div className="row">
             <Switch>
