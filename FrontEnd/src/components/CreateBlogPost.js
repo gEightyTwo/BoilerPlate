@@ -1,26 +1,17 @@
 import React, { Component } from 'react'
-import { request } from '../helpers'
+// import { request } from '../helpers'
 import { withRouter } from 'react-router-dom'
+import { addPost } from '../actions'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
 class CreateBlogPost extends Component {
-  constructor(props){
-    super(props)
-
-    this.state = {
-      labels: []
-    }
-  }
 
   componentDidMount(){
-    request(`/labels?limit=12`)
-    .then(({data: { labels } }) => {
-      this.setState({ labels: labels.map(label=>({...label, selected: false})) })
-    })
-  }
-  selectLabel = (id) => {
-    this.setState({ labels: this.state.labels.map(label =>
-      label.id === id ? {...label, selected:!label.selected} : {...label })
-    })
+    // request(`/labels?limit=12`)
+    // .then(({data: { labels } }) => {
+    //   this.setState({ labels: labels.map(label=>({...label, selected: false})) })
+    // })
   }
 
   cancel = () => {
@@ -29,15 +20,16 @@ class CreateBlogPost extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    request('/blog_posts','post', {
-      title: event.target.title.value,
-      body: event.target.body.value,
-      labelIds: this.state.labels.filter(label => label.selected).map(label => label.id)
-    })
-    .then(response => {
+    this.props.addPost(event.target.title.value, event.target.body.value)
+    // request('/blog_posts','post', {
+    //   title: event.target.title.value,
+    //   body: event.target.body.value,
+    // })
+    // .then(response => {
       this.props.history.push('/')
-    })
+    // })
   }
+
   render(){
     return (
       <div className="container">
@@ -47,20 +39,6 @@ class CreateBlogPost extends Component {
             <input name="title" type="text" className="form-control" id="exampleFormControlInput1" />
           </div>
           <div className="nav-scroller py-1 mb-2">
-            <nav className="nav d-flex justify-content-between">
-              {
-                this.state.labels.map((ele,id) =>
-                  <span
-                    key={id}
-                    className={`p-2 ${ele.selected ? 'blog-post-label': ''}`}
-                    to={`/labels/${ele.label_text}`}
-                    onClick={() => this.selectLabel(ele.id)}
-                  >
-                    {ele.label_text}
-                  </span>
-                )
-              }
-            </nav>
           </div>
           <div className="form-group">
             <label htmlFor="exampleFormControlTextarea1">Blog Body</label>
@@ -81,5 +59,8 @@ class CreateBlogPost extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => bindActionCreators({
+  addPost
+}, dispatch)
 
-export default withRouter(CreateBlogPost)
+export default connect(null, mapDispatchToProps)(withRouter(CreateBlogPost))
