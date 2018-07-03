@@ -11,13 +11,10 @@ export const addPost = (title, body ) => {
   }
   return dispatch => {
     request(`/blog_posts`, `post`, newPost)
-    // dispatch({
-    //   type: ADD_POST,
-    //   payload: newPost
-    // })
-    // .then(response => {
-      // this.props.history.push('/')
-    // })
+    .then(newpost => dispatch({
+      type: ADD_POST,
+      payload: newPost
+    }))
   }
 }
 
